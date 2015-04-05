@@ -40,15 +40,9 @@
     -o-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     -ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-    border-bottom: dotted 1px #666;
     color: inherit;
     text-decoration: none;
   }
-
-    a:hover {
-      border-bottom-color: transparent !important;
-      color: #6bd4c8;
-    }
 
   strong, b {
     color: #555;
@@ -885,15 +879,9 @@
   border-bottom-left-radius: 10px;
   padding: 30px 0 0 10px;
   -webkit-box-shadow:
-    inset 0 0 8px #bbb,
-    0 1px 0 #aaa,
-    0 4px 0 #bbb,
-    0 10px 30px #ddd;
+    inset 0 0 8px #bbb, 0 1px 0 #aaa, 0 4px 0 #bbb, 0 10px 30px #333;
   -moz-box-shadow:
-    inset 0 0 8px #bbb,
-    0 1px 0 #aaa,
-    0 4px 0 #bbb,
-    0 10px 30px #ddd;
+    inset 0 0 8px #bbb, 0 1px 0 #aaa, 0 4px 0 #bbb, 0 10px 30px #333;
   box-shadow:
     inset 0 0 8px #bbb, 0 1px 0 #aaa, 0 4px 0 #bbb, 0 10px 30px #333;}
 
@@ -929,6 +917,28 @@ li {float: left;}
     0 2px 0 #c9c9c9,
     0 2px 3px #333;
   text-shadow: 0px 1px 0px #f5f5f5;}
+
+.key.bad, .key.bad:active, .key.bad.keydown {
+  color: white;
+  background: #B35D61;
+  -webkit-box-shadow: inset 0 0 25px #794B4B, 0 1px 0 #825454, 0 2px 0 #854F4F, 0 2px 3px #4C2424;
+  -moz-box-shadow: inset 0 0 25px #794B4B, 0 1px 0 #825454, 0 2px 0 #854F4F, 0 2px 3px #4C2424;
+  box-shadow: inset 0 0 25px #794B4B, 0 1px 0 #825454, 0 2px 0 #854F4F, 0 2px 3px #4C2424;
+  border-top: 1px solid #B59E9E;
+  text-shadow: none;
+  margin: 5px;
+}
+
+.key.good, .key.good:active, .key.good.keydown {
+  color: white;
+  background: #B6CC60;
+  -webkit-box-shadow: inset 0 0 25px #7FBB4F, 0 1px 0 #87AF73, 0 2px 0 #67854F, 0 2px 3px #4C6E3E;
+  -moz-box-shadow: inset 0 0 25px #7FBB4F, 0 1px 0 #87AF73, 0 2px 0 #67854F, 0 2px 3px #4C6E3E;
+  box-shadow: inset 0 0 25px #7FBB4F, 0 1px 0 #87AF73, 0 2px 0 #67854F, 0 2px 3px #4C6E3E;
+  border-top: 1px solid #A5B59E;
+  text-shadow: none;
+  margin: 5px;
+}
 
 .key:active, .keydown {
   color: #888;
@@ -1043,14 +1053,6 @@ ul, ol {padding: 0px; margin: 0;}
 
     height: 100%;
   }
-
-    #header a {
-      border-bottom-color: rgba(255, 255, 255, 0.5);
-    }
-
-      #header a:hover {
-        color: #ffffff;
-      }
 
     #header h1, #header h2, #header h3, #header h4, #header h5, #header h6, #header strong, #header b {
       color: #ffffff;
