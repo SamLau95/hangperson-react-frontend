@@ -10,4 +10,4 @@ class Hangperson extends React.Component {
   }
 }
 
-React.render(<Hangperson />, document.getElementById("hangperson-container"));
+React.render(<Hangperson />, document.getElementById('hangperson-container'));
