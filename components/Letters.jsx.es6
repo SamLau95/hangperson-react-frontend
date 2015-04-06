@@ -19,5 +19,3 @@ class Letters extends React.Component {
     )
   }
 }
-
-React.render(<Letters word="h e - - o"/>, document.getElementById("letters-container"));

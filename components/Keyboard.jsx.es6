@@ -51,5 +51,3 @@ class Keyboard extends React.Component {
     )
   }
 }
-
-React.render(<Keyboard/>, document.getElementById("keyboard-container"));
