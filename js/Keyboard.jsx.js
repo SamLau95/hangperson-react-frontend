@@ -20,7 +20,7 @@ var Keyboard = (function (_React$Component) {
   _createClass(Keyboard, {
     render: {
       value: function render() {
-        var id = this.props.id;
+        var game_id = this.props.game_id;
         return React.createElement(
           "div",
           { id: "keyboard" },
@@ -36,16 +36,16 @@ var Keyboard = (function (_React$Component) {
                 React.createElement("span", null)
               )
             ),
-            React.createElement(Key, { id: id, value: "q", keycode: "81" }),
-            React.createElement(Key, { id: id, value: "w", keycode: "87" }),
-            React.createElement(Key, { id: id, value: "e", keycode: "69" }),
-            React.createElement(Key, { id: id, value: "r", keycode: "82" }),
-            React.createElement(Key, { id: id, value: "t", keycode: "84" }),
-            React.createElement(Key, { id: id, value: "y", keycode: "89" }),
-            React.createElement(Key, { id: id, value: "u", keycode: "85" }),
-            React.createElement(Key, { id: id, value: "i", keycode: "73" }),
-            React.createElement(Key, { id: id, value: "o", keycode: "79" }),
-            React.createElement(Key, { id: id, value: "p", keycode: "80" }),
+            React.createElement(Key, { game_id: game_id, value: "q", keycode: "81" }),
+            React.createElement(Key, { game_id: game_id, value: "w", keycode: "87" }),
+            React.createElement(Key, { game_id: game_id, value: "e", keycode: "69" }),
+            React.createElement(Key, { game_id: game_id, value: "r", keycode: "82" }),
+            React.createElement(Key, { game_id: game_id, value: "t", keycode: "84" }),
+            React.createElement(Key, { game_id: game_id, value: "y", keycode: "89" }),
+            React.createElement(Key, { game_id: game_id, value: "u", keycode: "85" }),
+            React.createElement(Key, { game_id: game_id, value: "i", keycode: "73" }),
+            React.createElement(Key, { game_id: game_id, value: "o", keycode: "79" }),
+            React.createElement(Key, { game_id: game_id, value: "p", keycode: "80" }),
             React.createElement(
               "li",
               null,
@@ -90,15 +90,15 @@ var Keyboard = (function (_React$Component) {
                 React.createElement("span", null)
               )
             ),
-            React.createElement(Key, { id: id, value: "a", keycode: "65" }),
-            React.createElement(Key, { id: id, value: "s", keycode: "83" }),
-            React.createElement(Key, { id: id, value: "d", keycode: "68" }),
-            React.createElement(Key, { id: id, value: "f", keycode: "70" }),
-            React.createElement(Key, { id: id, value: "g", keycode: "71" }),
-            React.createElement(Key, { id: id, value: "h", keycode: "72" }),
-            React.createElement(Key, { id: id, value: "j", keycode: "74" }),
-            React.createElement(Key, { id: id, value: "k", keycode: "75" }),
-            React.createElement(Key, { id: id, value: "l", keycode: "76" }),
+            React.createElement(Key, { game_id: game_id, value: "a", keycode: "65" }),
+            React.createElement(Key, { game_id: game_id, value: "s", keycode: "83" }),
+            React.createElement(Key, { game_id: game_id, value: "d", keycode: "68" }),
+            React.createElement(Key, { game_id: game_id, value: "f", keycode: "70" }),
+            React.createElement(Key, { game_id: game_id, value: "g", keycode: "71" }),
+            React.createElement(Key, { game_id: game_id, value: "h", keycode: "72" }),
+            React.createElement(Key, { game_id: game_id, value: "j", keycode: "74" }),
+            React.createElement(Key, { game_id: game_id, value: "k", keycode: "75" }),
+            React.createElement(Key, { game_id: game_id, value: "l", keycode: "76" }),
             React.createElement(
               "li",
               null,
@@ -141,13 +141,13 @@ var Keyboard = (function (_React$Component) {
                 React.createElement("span", null)
               )
             ),
-            React.createElement(Key, { id: id, value: "z", keycode: "90" }),
-            React.createElement(Key, { id: id, value: "x", keycode: "88" }),
-            React.createElement(Key, { id: id, value: "c", keycode: "67" }),
-            React.createElement(Key, { id: id, value: "v", keycode: "86" }),
-            React.createElement(Key, { id: id, value: "b", keycode: "66" }),
-            React.createElement(Key, { id: id, value: "n", keycode: "78" }),
-            React.createElement(Key, { id: id, value: "m", keycode: "77" }),
+            React.createElement(Key, { game_id: game_id, value: "z", keycode: "90" }),
+            React.createElement(Key, { game_id: game_id, value: "x", keycode: "88" }),
+            React.createElement(Key, { game_id: game_id, value: "c", keycode: "67" }),
+            React.createElement(Key, { game_id: game_id, value: "v", keycode: "86" }),
+            React.createElement(Key, { game_id: game_id, value: "b", keycode: "66" }),
+            React.createElement(Key, { game_id: game_id, value: "n", keycode: "78" }),
+            React.createElement(Key, { game_id: game_id, value: "m", keycode: "77" }),
             React.createElement(
               "li",
               null,

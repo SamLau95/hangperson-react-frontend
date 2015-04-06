@@ -24,18 +24,20 @@ var Key = (function (_React$Component) {
         var _this = this;
 
         var _props = this.props;
-        var id = _props.id;
+        var game_id = _props.game_id;
         var value = _props.value;
 
         var guess = JSON.stringify({ guess: value });
 
-        $.post(guess_url(id), guess, function (data) {
+        $.post(guess_url(game_id), guess, function (data) {
           var game = JSON.parse(data);
           if (game.guesses.indexOf(value) === -1) {
             _this.setState({ "class": "bad" });
           } else {
             _this.setState({ "class": "good" });
           }
+
+          $("#hangperson-container").trigger("game_updated");
         });
       }
     },

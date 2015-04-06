@@ -850,6 +850,7 @@
 .spacer { height: 75px; }
 
 #letters {
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;

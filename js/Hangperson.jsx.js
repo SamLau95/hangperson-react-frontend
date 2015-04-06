@@ -20,24 +20,34 @@ var Hangperson = (function (_React$Component) {
   _createClass(Hangperson, {
     componentWillMount: {
       value: function componentWillMount() {
-        var _this = this;
-
         this.state = { word: "" };
 
-        $.post(create_url(), function (data) {
-          var game = JSON.parse(data);
-          _this.setState({
-            id: game.id,
-            word: game.word_with_guesses,
-            guesses: game.guesses,
-            wrong_guesses: game.wrong_guesses });
+        $.post(create_url(), this.updateGame.bind(this));
+
+        $("#hangperson-container").on("game_updated", this.handleGameUpdated.bind(this));
+      }
+    },
+    updateGame: {
+      value: function updateGame(data) {
+        var game = JSON.parse(data);
+        this.setState({
+          game_id: this.state.game_id || game.id,
+          word: game.word_with_guesses,
+          guesses: game.guesses,
+          wrong_guesses: game.wrong_guesses,
+          status: game.status
         });
+      }
+    },
+    handleGameUpdated: {
+      value: function handleGameUpdated() {
+        $.get(game_url(this.state.game_id), this.updateGame.bind(this));
       }
     },
     render: {
       value: function render() {
         var _state = this.state;
-        var id = _state.id;
+        var game_id = _state.game_id;
         var word = _state.word;
         var guesses = _state.guesses;
         var wrong_guesses = _state.wrong_guesses;
@@ -47,7 +57,7 @@ var Hangperson = (function (_React$Component) {
           { id: "hangperson" },
           React.createElement(Letters, { word: word }),
           React.createElement("div", { className: "spacer" }),
-          React.createElement(Keyboard, { id: id })
+          React.createElement(Keyboard, { game_id: game_id })
         );
       }
     }
