@@ -18,14 +18,36 @@ var Hangperson = (function (_React$Component) {
   _inherits(Hangperson, _React$Component);
 
   _createClass(Hangperson, {
+    componentWillMount: {
+      value: function componentWillMount() {
+        var _this = this;
+
+        this.state = { word: "" };
+
+        $.post(create_url(), function (data) {
+          var game = JSON.parse(data);
+          _this.setState({
+            id: game.id,
+            word: game.word_with_guesses,
+            guesses: game.guesses,
+            wrong_guesses: game.wrong_guesses });
+        });
+      }
+    },
     render: {
       value: function render() {
+        var _state = this.state;
+        var id = _state.id;
+        var word = _state.word;
+        var guesses = _state.guesses;
+        var wrong_guesses = _state.wrong_guesses;
+
         return React.createElement(
           "div",
           { id: "hangperson" },
-          React.createElement(Letters, { word: "h e - - o" }),
+          React.createElement(Letters, { word: word }),
           React.createElement("div", { className: "spacer" }),
-          React.createElement(Keyboard, null)
+          React.createElement(Keyboard, { id: id })
         );
       }
     }

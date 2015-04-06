@@ -19,10 +19,15 @@ var Letters = (function (_React$Component) {
   _inherits(Letters, _React$Component);
 
   _createClass(Letters, {
+    componentWillReceiveProps: {
+      value: function componentWillReceiveProps(newProps) {
+        this.setState({ word: newProps.word });
+      }
+    },
     splitAndReplace: {
       value: function splitAndReplace(word) {
-        return word.split(" ").map(function (letter) {
-          return letter == "-" ? "" : letter;
+        return word.split("").map(function (letter) {
+          return letter === "-" ? "" : letter;
         });
       }
     },

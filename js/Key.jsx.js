@@ -21,8 +21,22 @@ var Key = (function (_React$Component) {
   _createClass(Key, {
     handleClick: {
       value: function handleClick() {
-        // Hardcoded for now.
-        this.setState({ "class": "good" });
+        var _this = this;
+
+        var _props = this.props;
+        var id = _props.id;
+        var value = _props.value;
+
+        var guess = JSON.stringify({ guess: value });
+
+        $.post(guess_url(id), guess, function (data) {
+          var game = JSON.parse(data);
+          if (game.guesses.indexOf(value) === -1) {
+            _this.setState({ "class": "bad" });
+          } else {
+            _this.setState({ "class": "good" });
+          }
+        });
       }
     },
     render: {

@@ -5,8 +5,17 @@ class Key extends React.Component {
   }
 
   handleClick() {
-    // Hardcoded for now.
-    this.setState({ class: "good" });
+    const { id, value } = this.props;
+    const guess = JSON.stringify({ "guess": value });
+
+    $.post(guess_url(id), guess, (data) => {
+      const game = JSON.parse(data);
+      if (game.guesses.indexOf(value) === -1) {
+        this.setState({ class: "bad" });
+      } else {
+        this.setState({ class: "good" });
+      }
+    });
   }
 
   render() {

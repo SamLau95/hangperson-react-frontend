@@ -8,5 +8,5 @@ function create_url() {
   return "" + BASE_URL + "/create";
 }
 function guess_url(game_id) {
-  return "" + BASE_URL + "/" + id + "/guess";
+  return "" + BASE_URL + "/" + game_id + "/guess";
 }
