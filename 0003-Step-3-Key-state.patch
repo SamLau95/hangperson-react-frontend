@@ -1,0 +1,86 @@
+From 4b6f54dd3530c79a8dae8a777418196a03a0decf Mon Sep 17 00:00:00 2001
+From: Sam Lau <samlau95@gmail.com>
+Date: Sun, 5 Apr 2015 04:12:14 -0700
+Subject: [PATCH 3/9] Step 3: Key state
+
+---
+ components/Key.jsx.es6 | 16 ++++++++++++++--
+ js/react-components.js | 19 +++++++++++++------
+ 2 files changed, 27 insertions(+), 8 deletions(-)
+
+diff --git a/components/Key.jsx.es6 b/components/Key.jsx.es6
+index 6bd177d..090d74b 100644
+--- a/components/Key.jsx.es6
++++ b/components/Key.jsx.es6
+@@ -1,8 +1,20 @@
+ class Key extends React.Component {
++  constructor(props) {
++    super(props);
++    this.state = { class: "" };
++  }
++
++  handleClick() {
++    // Hardcoded for now.
++    this.setState({ class: "good" });
++  }
++
+   render() {
+-    const classString = `key c${this.props.keycode}`;
++    const classString = `key c${this.props.keycode} ${this.state.class}`;
+     return (
+-      <li><a href="#" className={classString}><span>{this.props.value}</span></a></li>
++      <li onClick={this.handleClick.bind(this)}>
++        <a href="#" className={classString}><span>{this.props.value}</span></a>
++      </li>
+     )
+   }
+ }
+diff --git a/js/react-components.js b/js/react-components.js
+index be80589..b3f977d 100644
+--- a/js/react-components.js
++++ b/js/react-components.js
+@@ -2,28 +2,35 @@
+ 
+ var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+ 
++var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
++
+ var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+ 
+ var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+ 
+ var Key = (function (_React$Component) {
+-  function Key() {
++  function Key(props) {
+     _classCallCheck(this, Key);
+ 
+-    if (_React$Component != null) {
+-      _React$Component.apply(this, arguments);
+-    }
++    _get(Object.getPrototypeOf(Key.prototype), "constructor", this).call(this, props);
++    this.state = { "class": "" };
+   }
+ 
+   _inherits(Key, _React$Component);
+ 
+   _createClass(Key, {
++    handleClick: {
++      value: function handleClick() {
++        // Hardcoded for now.
++        this.setState({ "class": "good" });
++      }
++    },
+     render: {
+       value: function render() {
+-        var classString = "key c" + this.props.keycode;
++        var classString = "key c" + this.props.keycode + " " + this.state["class"];
+         return React.createElement(
+           "li",
+-          null,
++          { onClick: this.handleClick.bind(this) },
+           React.createElement(
+             "a",
+             { href: "#", className: classString },
+-- 
+1.8.5
+

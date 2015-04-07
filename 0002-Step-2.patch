@@ -1,0 +1,542 @@
+From 9d9ab9df6158c53ac099757ab749b78acb8be489 Mon Sep 17 00:00:00 2001
+From: Sam Lau <samlau95@gmail.com>
+Date: Sun, 5 Apr 2015 03:10:56 -0700
+Subject: [PATCH 2/9] Step 2 Key component
+
+---
+ components/Key.jsx.es6      |   8 +
+ components/Keyboard.jsx.es6 |  52 +++---
+ js/react-components.js      | 406 ++++++++------------------------------------
+ 3 files changed, 102 insertions(+), 364 deletions(-)
+ create mode 100644 components/Key.jsx.es6
+
+diff --git a/components/Key.jsx.es6 b/components/Key.jsx.es6
+new file mode 100644
+index 0000000..6bd177d
+--- /dev/null
++++ b/components/Key.jsx.es6
+@@ -0,0 +1,8 @@
++class Key extends React.Component {
++  render() {
++    const classString = `key c${this.props.keycode}`;
++    return (
++      <li><a href="#" className={classString}><span>{this.props.value}</span></a></li>
++    )
++  }
++}
+diff --git a/components/Keyboard.jsx.es6 b/components/Keyboard.jsx.es6
+index a13892b..e188df1 100644
+--- a/components/Keyboard.jsx.es6
++++ b/components/Keyboard.jsx.es6
+@@ -4,44 +4,44 @@ class Keyboard extends React.Component {
+       <div id="keyboard">
+         <ul className="cf" id="qwerty">
+           <li><a href="#" className="key c9" id="tab"><span></span></a></li>
+-          <li><a href="#" className="key c81"><span>q</span></a></li>
+-          <li><a href="#" className="key c87"><span>w</span></a></li>
+-          <li><a href="#" className="key c69"><span>e</span></a></li>
+-          <li><a href="#" className="key c82"><span>r</span></a></li>
+-          <li><a href="#" className="key c84"><span>t</span></a></li>
+-          <li><a href="#" className="key c89"><span>y</span></a></li>
+-          <li><a href="#" className="key c85"><span>u</span></a></li>
+-          <li><a href="#" className="key c73"><span>i</span></a></li>
+-          <li><a href="#" className="key c79"><span>o</span></a></li>
+-          <li><a href="#" className="key c80"><span>p</span></a></li>
++          <Key value="q" keycode="81"/>
++          <Key value="w" keycode="87"/>
++          <Key value="e" keycode="69"/>
++          <Key value="r" keycode="82"/>
++          <Key value="t" keycode="84"/>
++          <Key value="y" keycode="89"/>
++          <Key value="u" keycode="85"/>
++          <Key value="i" keycode="73"/>
++          <Key value="o" keycode="79"/>
++          <Key value="p" keycode="80"/>
+           <li><a href="#" className="key c219 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c221 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c220 alt"><b></b><span></span></a></li>
+         </ul>
+         <ul className="cf" id="asdfg">
+           <li><a href="#" className="key c20 alt" id="caps"><b></b><span></span></a></li>
+-          <li><a href="#" className="key c65"><span>a</span></a></li>
+-          <li><a href="#" className="key c83"><span>s</span></a></li>
+-          <li><a href="#" className="key c68"><span>d</span></a></li>
+-          <li><a href="#" className="key c70"><span>f</span></a></li>
+-          <li><a href="#" className="key c71"><span>g</span></a></li>
+-          <li><a href="#" className="key c72"><span>h</span></a></li>
+-          <li><a href="#" className="key c74"><span>j</span></a></li>
+-          <li><a href="#" className="key c75"><span>k</span></a></li>
+-          <li><a href="#" className="key c76"><span>l</span></a></li>
++          <Key value="a" keycode="65"/>
++          <Key value="s" keycode="83"/>
++          <Key value="d" keycode="68"/>
++          <Key value="f" keycode="70"/>
++          <Key value="g" keycode="71"/>
++          <Key value="h" keycode="72"/>
++          <Key value="j" keycode="74"/>
++          <Key value="k" keycode="75"/>
++          <Key value="l" keycode="76"/>
+           <li><a href="#" className="key c186 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c222 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c13 alt" id="enter"><span></span></a></li>
+         </ul>
+         <ul className="cf" id="zxcvb">
+           <li><a href="#" className="key c16 shiftleft"><span></span></a></li>
+-          <li><a href="#" className="key c90"><span>z</span></a></li>
+-          <li><a href="#" className="key c88"><span>x</span></a></li>
+-          <li><a href="#" className="key c67"><span>c</span></a></li>
+-          <li><a href="#" className="key c86"><span>v</span></a></li>
+-          <li><a href="#" className="key c66"><span>b</span></a></li>
+-          <li><a href="#" className="key c78"><span>n</span></a></li>
+-          <li><a href="#" className="key c77"><span>m</span></a></li>
++          <Key value="z" keycode="90"/>
++          <Key value="x" keycode="88"/>
++          <Key value="c" keycode="67"/>
++          <Key value="v" keycode="86"/>
++          <Key value="b" keycode="66"/>
++          <Key value="n" keycode="78"/>
++          <Key value="m" keycode="77"/>
+           <li><a href="#" className="key c188 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c190 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c191 alt"><b></b><span></span></a></li>
+diff --git a/js/react-components.js b/js/react-components.js
+index 1f4fcae..be80589 100644
+--- a/js/react-components.js
++++ b/js/react-components.js
+@@ -6,6 +6,48 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
+ 
+ var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+ 
++var Key = (function (_React$Component) {
++  function Key() {
++    _classCallCheck(this, Key);
++
++    if (_React$Component != null) {
++      _React$Component.apply(this, arguments);
++    }
++  }
++
++  _inherits(Key, _React$Component);
++
++  _createClass(Key, {
++    render: {
++      value: function render() {
++        var classString = "key c" + this.props.keycode;
++        return React.createElement(
++          "li",
++          null,
++          React.createElement(
++            "a",
++            { href: "#", className: classString },
++            React.createElement(
++              "span",
++              null,
++              this.props.value
++            )
++          )
++        );
++      }
++    }
++  });
++
++  return Key;
++})(React.Component);
++"use strict";
++
++var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
++
++var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
++
++var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
++
+ var Keyboard = (function (_React$Component) {
+   function Keyboard() {
+     _classCallCheck(this, Keyboard);
+@@ -35,136 +77,16 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c81" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "q"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c87" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "w"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c69" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "e"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c82" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "r"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c84" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "t"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c89" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "y"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c85" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "u"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c73" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "i"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c79" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "o"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c80" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "p"
+-                )
+-              )
+-            ),
++            React.createElement(Key, { value: "q", keycode: "81" }),
++            React.createElement(Key, { value: "w", keycode: "87" }),
++            React.createElement(Key, { value: "e", keycode: "69" }),
++            React.createElement(Key, { value: "r", keycode: "82" }),
++            React.createElement(Key, { value: "t", keycode: "84" }),
++            React.createElement(Key, { value: "y", keycode: "89" }),
++            React.createElement(Key, { value: "u", keycode: "85" }),
++            React.createElement(Key, { value: "i", keycode: "73" }),
++            React.createElement(Key, { value: "o", keycode: "79" }),
++            React.createElement(Key, { value: "p", keycode: "80" }),
+             React.createElement(
+               "li",
+               null,
+@@ -209,123 +131,15 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c65" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "a"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c83" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "s"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c68" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "d"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c70" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "f"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c71" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "g"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c72" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "h"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c74" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "j"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c75" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "k"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c76" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "l"
+-                )
+-              )
+-            ),
++            React.createElement(Key, { value: "a", keycode: "65" }),
++            React.createElement(Key, { value: "s", keycode: "83" }),
++            React.createElement(Key, { value: "d", keycode: "68" }),
++            React.createElement(Key, { value: "f", keycode: "70" }),
++            React.createElement(Key, { value: "g", keycode: "71" }),
++            React.createElement(Key, { value: "h", keycode: "72" }),
++            React.createElement(Key, { value: "j", keycode: "74" }),
++            React.createElement(Key, { value: "k", keycode: "75" }),
++            React.createElement(Key, { value: "l", keycode: "76" }),
+             React.createElement(
+               "li",
+               null,
+@@ -368,97 +182,13 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c90" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "z"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c88" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "x"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c67" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "c"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c86" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "v"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c66" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "b"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c78" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "n"
+-                )
+-              )
+-            ),
+-            React.createElement(
+-              "li",
+-              null,
+-              React.createElement(
+-                "a",
+-                { href: "#", className: "key c77" },
+-                React.createElement(
+-                  "span",
+-                  null,
+-                  "m"
+-                )
+-              )
+-            ),
++            React.createElement(Key, { value: "z", keycode: "90" }),
++            React.createElement(Key, { value: "x", keycode: "88" }),
++            React.createElement(Key, { value: "c", keycode: "67" }),
++            React.createElement(Key, { value: "v", keycode: "86" }),
++            React.createElement(Key, { value: "b", keycode: "66" }),
++            React.createElement(Key, { value: "n", keycode: "78" }),
++            React.createElement(Key, { value: "m", keycode: "77" }),
+             React.createElement(
+               "li",
+               null,
+-- 
+1.8.5
+

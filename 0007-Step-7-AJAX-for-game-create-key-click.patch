@@ -1,0 +1,413 @@
+From bd723d995690b1f585161983e59f09d44513f9af Mon Sep 17 00:00:00 2001
+From: Sam Lau <samlau95@gmail.com>
+Date: Sun, 5 Apr 2015 21:58:22 -0700
+Subject: [PATCH 7/9] Step 7: AJAX for game create, key click Use ===
+
+URLs for ajax, jQuery
+
+Create game on load
+
+Post guess on key click
+
+Pass is down and fix bug
+---
+ components/Hangperson.jsx.es6 | 19 ++++++++++++++--
+ components/Key.jsx.es6        | 13 +++++++++--
+ components/Keyboard.jsx.es6   | 53 ++++++++++++++++++++++---------------------
+ components/Letters.jsx.es6    | 10 +++++---
+ components/urls.es6           |  4 ++++
+ index.html                    |  4 ++--
+ js/Hangperson.jsx.js          | 26 +++++++++++++++++++--
+ js/Key.jsx.js                 | 18 +++++++++++++--
+ js/Keyboard.jsx.js            | 53 ++++++++++++++++++++++---------------------
+ js/Letters.jsx.js             |  9 ++++++--
+ js/urls.js                    |  2 +-
+ 11 files changed, 143 insertions(+), 68 deletions(-)
+ create mode 100644 components/urls.es6
+
+diff --git a/components/Hangperson.jsx.es6 b/components/Hangperson.jsx.es6
+index 21011cc..243b652 100644
+--- a/components/Hangperson.jsx.es6
++++ b/components/Hangperson.jsx.es6
+@@ -1,10 +1,25 @@
+ class Hangperson extends React.Component {
++  componentWillMount() {
++    this.state = { word: "" };
++
++    $.post(create_url(), (data) => {
++      const game = JSON.parse(data);
++      this.setState({
++        id: game.id,
++        word: game.word_with_guesses,
++        guesses: game.guesses,
++        wrong_guesses: game.wrong_guesses,
++      });
++    });
++  }
++
+   render() {
++    const { id, word, guesses, wrong_guesses } = this.state;
+     return (
+       <div id="hangperson">
+-        <Letters word="h e - - o" />
++        <Letters word={word} />
+         <div className="spacer"></div>
+-        <Keyboard />
++        <Keyboard id={id} />
+       </div>
+     )
+   }
+diff --git a/components/Key.jsx.es6 b/components/Key.jsx.es6
+index 090d74b..4e01c40 100644
+--- a/components/Key.jsx.es6
++++ b/components/Key.jsx.es6
+@@ -5,8 +5,17 @@ class Key extends React.Component {
+   }
+ 
+   handleClick() {
+-    // Hardcoded for now.
+-    this.setState({ class: "good" });
++    const { id, value } = this.props;
++    const guess = JSON.stringify({ "guess": value });
++
++    $.post(guess_url(id), guess, (data) => {
++      const game = JSON.parse(data);
++      if (game.guesses.indexOf(value) === -1) {
++        this.setState({ class: "bad" });
++      } else {
++        this.setState({ class: "good" });
++      }
++    });
+   }
+ 
+   render() {
+diff --git a/components/Keyboard.jsx.es6 b/components/Keyboard.jsx.es6
+index b199183..4602d20 100644
+--- a/components/Keyboard.jsx.es6
++++ b/components/Keyboard.jsx.es6
+@@ -1,47 +1,48 @@
+ class Keyboard extends React.Component {
+   render() {
++    const id = this.props.id;
+     return (
+       <div id="keyboard">
+         <ul className="cf" id="qwerty">
+           <li><a href="#" className="key c9" id="tab"><span></span></a></li>
+-          <Key value="q" keycode="81"/>
+-          <Key value="w" keycode="87"/>
+-          <Key value="e" keycode="69"/>
+-          <Key value="r" keycode="82"/>
+-          <Key value="t" keycode="84"/>
+-          <Key value="y" keycode="89"/>
+-          <Key value="u" keycode="85"/>
+-          <Key value="i" keycode="73"/>
+-          <Key value="o" keycode="79"/>
+-          <Key value="p" keycode="80"/>
++          <Key id={id} value="q" keycode="81"/>
++          <Key id={id} value="w" keycode="87"/>
++          <Key id={id} value="e" keycode="69"/>
++          <Key id={id} value="r" keycode="82"/>
++          <Key id={id} value="t" keycode="84"/>
++          <Key id={id} value="y" keycode="89"/>
++          <Key id={id} value="u" keycode="85"/>
++          <Key id={id} value="i" keycode="73"/>
++          <Key id={id} value="o" keycode="79"/>
++          <Key id={id} value="p" keycode="80"/>
+           <li><a href="#" className="key c219 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c221 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c220 alt"><b></b><span></span></a></li>
+         </ul>
+         <ul className="cf" id="asdfg">
+           <li><a href="#" className="key c20 alt" id="caps"><b></b><span></span></a></li>
+-          <Key value="a" keycode="65"/>
+-          <Key value="s" keycode="83"/>
+-          <Key value="d" keycode="68"/>
+-          <Key value="f" keycode="70"/>
+-          <Key value="g" keycode="71"/>
+-          <Key value="h" keycode="72"/>
+-          <Key value="j" keycode="74"/>
+-          <Key value="k" keycode="75"/>
+-          <Key value="l" keycode="76"/>
++          <Key id={id} value="a" keycode="65"/>
++          <Key id={id} value="s" keycode="83"/>
++          <Key id={id} value="d" keycode="68"/>
++          <Key id={id} value="f" keycode="70"/>
++          <Key id={id} value="g" keycode="71"/>
++          <Key id={id} value="h" keycode="72"/>
++          <Key id={id} value="j" keycode="74"/>
++          <Key id={id} value="k" keycode="75"/>
++          <Key id={id} value="l" keycode="76"/>
+           <li><a href="#" className="key c186 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c222 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c13 alt" id="enter"><span></span></a></li>
+         </ul>
+         <ul className="cf" id="zxcvb">
+           <li><a href="#" className="key c16 shiftleft"><span></span></a></li>
+-          <Key value="z" keycode="90"/>
+-          <Key value="x" keycode="88"/>
+-          <Key value="c" keycode="67"/>
+-          <Key value="v" keycode="86"/>
+-          <Key value="b" keycode="66"/>
+-          <Key value="n" keycode="78"/>
+-          <Key value="m" keycode="77"/>
++          <Key id={id} value="z" keycode="90"/>
++          <Key id={id} value="x" keycode="88"/>
++          <Key id={id} value="c" keycode="67"/>
++          <Key id={id} value="v" keycode="86"/>
++          <Key id={id} value="b" keycode="66"/>
++          <Key id={id} value="n" keycode="78"/>
++          <Key id={id} value="m" keycode="77"/>
+           <li><a href="#" className="key c188 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c190 alt"><b></b><span></span></a></li>
+           <li><a href="#" className="key c191 alt"><b></b><span></span></a></li>
+diff --git a/components/Letters.jsx.es6 b/components/Letters.jsx.es6
+index 86b23f2..15d29a2 100644
+--- a/components/Letters.jsx.es6
++++ b/components/Letters.jsx.es6
+@@ -1,12 +1,16 @@
+ class Letters extends React.Component {
+   constructor(props) {
+     super(props);
+-    this.state = { "word": props.word }
++    this.state = { word: props.word };
++  }
++
++  componentWillReceiveProps(newProps) {
++    this.setState({ word: newProps.word });
+   }
+ 
+   splitAndReplace(word) {
+-    return word.split(" ")
+-               .map((letter) => letter == "-" ? "" : letter);
++    return word.split("")
++               .map((letter) => letter === "-" ? "" : letter);
+   }
+ 
+   render() {
+diff --git a/components/urls.es6 b/components/urls.es6
+new file mode 100644
+index 0000000..482a3b9
+--- /dev/null
++++ b/components/urls.es6
+@@ -0,0 +1,4 @@
++const BASE_URL = "http://localhost:9292"
++function game_url(game_id) { return `${BASE_URL}/${game_id}`; }
++function create_url() { return `${BASE_URL}/create`; }
++function guess_url(game_id) { return `${BASE_URL}/${game_id}/guess`; }
+diff --git a/index.html b/index.html
+index 9801837..a769ccc 100644
+--- a/index.html
++++ b/index.html
+@@ -9,8 +9,6 @@
+   <link rel="stylesheet" href="css/style.css" />
+   <link rel="stylesheet" href="css/style-large.css" />
+ 
+-  <link rel="stylesheet" href="js/jquery.min.js">
+-
+   <title>Hangperson with React</title>
+ </head>
+ <body>
+@@ -24,7 +22,9 @@
+     </div>
+   </section>
+ 
++  <script src="js/jquery.min.js"></script>
+   <script src="http://fb.me/react-0.13.1.min.js"></script>
++  <script src="js/urls.js"></script>
+   <script src="js/Key.jsx.js"></script>
+   <script src="js/Keyboard.jsx.js"></script>
+   <script src="js/Letters.jsx.js"></script>
+diff --git a/js/Hangperson.jsx.js b/js/Hangperson.jsx.js
+index 9d7f4e1..20531d4 100644
+--- a/js/Hangperson.jsx.js
++++ b/js/Hangperson.jsx.js
+@@ -18,14 +18,36 @@ var Hangperson = (function (_React$Component) {
+   _inherits(Hangperson, _React$Component);
+ 
+   _createClass(Hangperson, {
++    componentWillMount: {
++      value: function componentWillMount() {
++        var _this = this;
++
++        this.state = { word: "" };
++
++        $.post(create_url(), function (data) {
++          var game = JSON.parse(data);
++          _this.setState({
++            id: game.id,
++            word: game.word_with_guesses,
++            guesses: game.guesses,
++            wrong_guesses: game.wrong_guesses });
++        });
++      }
++    },
+     render: {
+       value: function render() {
++        var _state = this.state;
++        var id = _state.id;
++        var word = _state.word;
++        var guesses = _state.guesses;
++        var wrong_guesses = _state.wrong_guesses;
++
+         return React.createElement(
+           "div",
+           { id: "hangperson" },
+-          React.createElement(Letters, { word: "h e - - o" }),
++          React.createElement(Letters, { word: word }),
+           React.createElement("div", { className: "spacer" }),
+-          React.createElement(Keyboard, null)
++          React.createElement(Keyboard, { id: id })
+         );
+       }
+     }
+diff --git a/js/Key.jsx.js b/js/Key.jsx.js
+index f5463d6..eb862e5 100644
+--- a/js/Key.jsx.js
++++ b/js/Key.jsx.js
+@@ -21,8 +21,22 @@ var Key = (function (_React$Component) {
+   _createClass(Key, {
+     handleClick: {
+       value: function handleClick() {
+-        // Hardcoded for now.
+-        this.setState({ "class": "good" });
++        var _this = this;
++
++        var _props = this.props;
++        var id = _props.id;
++        var value = _props.value;
++
++        var guess = JSON.stringify({ guess: value });
++
++        $.post(guess_url(id), guess, function (data) {
++          var game = JSON.parse(data);
++          if (game.guesses.indexOf(value) === -1) {
++            _this.setState({ "class": "bad" });
++          } else {
++            _this.setState({ "class": "good" });
++          }
++        });
+       }
+     },
+     render: {
+diff --git a/js/Keyboard.jsx.js b/js/Keyboard.jsx.js
+index 6b89c17..313d165 100644
+--- a/js/Keyboard.jsx.js
++++ b/js/Keyboard.jsx.js
+@@ -20,6 +20,7 @@ var Keyboard = (function (_React$Component) {
+   _createClass(Keyboard, {
+     render: {
+       value: function render() {
++        var id = this.props.id;
+         return React.createElement(
+           "div",
+           { id: "keyboard" },
+@@ -35,16 +36,16 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(Key, { value: "q", keycode: "81" }),
+-            React.createElement(Key, { value: "w", keycode: "87" }),
+-            React.createElement(Key, { value: "e", keycode: "69" }),
+-            React.createElement(Key, { value: "r", keycode: "82" }),
+-            React.createElement(Key, { value: "t", keycode: "84" }),
+-            React.createElement(Key, { value: "y", keycode: "89" }),
+-            React.createElement(Key, { value: "u", keycode: "85" }),
+-            React.createElement(Key, { value: "i", keycode: "73" }),
+-            React.createElement(Key, { value: "o", keycode: "79" }),
+-            React.createElement(Key, { value: "p", keycode: "80" }),
++            React.createElement(Key, { id: id, value: "q", keycode: "81" }),
++            React.createElement(Key, { id: id, value: "w", keycode: "87" }),
++            React.createElement(Key, { id: id, value: "e", keycode: "69" }),
++            React.createElement(Key, { id: id, value: "r", keycode: "82" }),
++            React.createElement(Key, { id: id, value: "t", keycode: "84" }),
++            React.createElement(Key, { id: id, value: "y", keycode: "89" }),
++            React.createElement(Key, { id: id, value: "u", keycode: "85" }),
++            React.createElement(Key, { id: id, value: "i", keycode: "73" }),
++            React.createElement(Key, { id: id, value: "o", keycode: "79" }),
++            React.createElement(Key, { id: id, value: "p", keycode: "80" }),
+             React.createElement(
+               "li",
+               null,
+@@ -89,15 +90,15 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(Key, { value: "a", keycode: "65" }),
+-            React.createElement(Key, { value: "s", keycode: "83" }),
+-            React.createElement(Key, { value: "d", keycode: "68" }),
+-            React.createElement(Key, { value: "f", keycode: "70" }),
+-            React.createElement(Key, { value: "g", keycode: "71" }),
+-            React.createElement(Key, { value: "h", keycode: "72" }),
+-            React.createElement(Key, { value: "j", keycode: "74" }),
+-            React.createElement(Key, { value: "k", keycode: "75" }),
+-            React.createElement(Key, { value: "l", keycode: "76" }),
++            React.createElement(Key, { id: id, value: "a", keycode: "65" }),
++            React.createElement(Key, { id: id, value: "s", keycode: "83" }),
++            React.createElement(Key, { id: id, value: "d", keycode: "68" }),
++            React.createElement(Key, { id: id, value: "f", keycode: "70" }),
++            React.createElement(Key, { id: id, value: "g", keycode: "71" }),
++            React.createElement(Key, { id: id, value: "h", keycode: "72" }),
++            React.createElement(Key, { id: id, value: "j", keycode: "74" }),
++            React.createElement(Key, { id: id, value: "k", keycode: "75" }),
++            React.createElement(Key, { id: id, value: "l", keycode: "76" }),
+             React.createElement(
+               "li",
+               null,
+@@ -140,13 +141,13 @@ var Keyboard = (function (_React$Component) {
+                 React.createElement("span", null)
+               )
+             ),
+-            React.createElement(Key, { value: "z", keycode: "90" }),
+-            React.createElement(Key, { value: "x", keycode: "88" }),
+-            React.createElement(Key, { value: "c", keycode: "67" }),
+-            React.createElement(Key, { value: "v", keycode: "86" }),
+-            React.createElement(Key, { value: "b", keycode: "66" }),
+-            React.createElement(Key, { value: "n", keycode: "78" }),
+-            React.createElement(Key, { value: "m", keycode: "77" }),
++            React.createElement(Key, { id: id, value: "z", keycode: "90" }),
++            React.createElement(Key, { id: id, value: "x", keycode: "88" }),
++            React.createElement(Key, { id: id, value: "c", keycode: "67" }),
++            React.createElement(Key, { id: id, value: "v", keycode: "86" }),
++            React.createElement(Key, { id: id, value: "b", keycode: "66" }),
++            React.createElement(Key, { id: id, value: "n", keycode: "78" }),
++            React.createElement(Key, { id: id, value: "m", keycode: "77" }),
+             React.createElement(
+               "li",
+               null,
+diff --git a/js/Letters.jsx.js b/js/Letters.jsx.js
+index 34e5889..1b488ba 100644
+--- a/js/Letters.jsx.js
++++ b/js/Letters.jsx.js
+@@ -19,10 +19,15 @@ var Letters = (function (_React$Component) {
+   _inherits(Letters, _React$Component);
+ 
+   _createClass(Letters, {
++    componentWillReceiveProps: {
++      value: function componentWillReceiveProps(newProps) {
++        this.setState({ word: newProps.word });
++      }
++    },
+     splitAndReplace: {
+       value: function splitAndReplace(word) {
+-        return word.split(" ").map(function (letter) {
+-          return letter == "-" ? "" : letter;
++        return word.split("").map(function (letter) {
++          return letter === "-" ? "" : letter;
+         });
+       }
+     },
+diff --git a/js/urls.js b/js/urls.js
+index bd98042..4144b38 100644
+--- a/js/urls.js
++++ b/js/urls.js
+@@ -8,5 +8,5 @@ function create_url() {
+   return "" + BASE_URL + "/create";
+ }
+ function guess_url(game_id) {
+-  return "" + BASE_URL + "/" + id + "/guess";
++  return "" + BASE_URL + "/" + game_id + "/guess";
+ }
+\ No newline at end of file
+-- 
+1.8.5
+

@@ -1,0 +1,139 @@
+From 98c061f6ae62d9cba8a1fed441dac367a0bd8dba Mon Sep 17 00:00:00 2001
+From: Sam Lau <samlau95@gmail.com>
+Date: Sun, 5 Apr 2015 19:59:10 -0700
+Subject: [PATCH 5/9] Step 5: Main Hangperson component
+
+---
+ components/Hangperson.jsx.es6 | 13 +++++++++++++
+ components/Keyboard.jsx.es6   |  2 --
+ components/Letters.jsx.es6    |  2 --
+ index.html                    |  6 +-----
+ js/react-components.js        | 41 +++++++++++++++++++++++++++++++++++++----
+ 5 files changed, 51 insertions(+), 13 deletions(-)
+ create mode 100644 components/Hangperson.jsx.es6
+
+diff --git a/components/Hangperson.jsx.es6 b/components/Hangperson.jsx.es6
+new file mode 100644
+index 0000000..09c5f75
+--- /dev/null
++++ b/components/Hangperson.jsx.es6
+@@ -0,0 +1,13 @@
++class Hangperson extends React.Component {
++  render() {
++    return (
++      <div id="hangperson">
++        <Letters word="h e - - o" />
++        <div className="spacer"></div>
++        <Keyboard />
++      </div>
++    )
++  }
++}
++
++React.render(<Hangperson />, document.getElementById("hangperson-container"));
+diff --git a/components/Keyboard.jsx.es6 b/components/Keyboard.jsx.es6
+index e188df1..b199183 100644
+--- a/components/Keyboard.jsx.es6
++++ b/components/Keyboard.jsx.es6
+@@ -51,5 +51,3 @@ class Keyboard extends React.Component {
+     )
+   }
+ }
+-
+-React.render(<Keyboard/>, document.getElementById("keyboard-container"));
+diff --git a/components/Letters.jsx.es6 b/components/Letters.jsx.es6
+index 3dc27c5..86b23f2 100644
+--- a/components/Letters.jsx.es6
++++ b/components/Letters.jsx.es6
+@@ -19,5 +19,3 @@ class Letters extends React.Component {
+     )
+   }
+ }
+-
+-React.render(<Letters word="h e - - o"/>, document.getElementById("letters-container"));
+diff --git a/index.html b/index.html
+index 06a9636..023434f 100644
+--- a/index.html
++++ b/index.html
+@@ -20,11 +20,7 @@
+       <h1>Welcome to Hangperson.</h1>
+       <div class="spacer"></div>
+ 
+-      <div id="letters-container"></div>
+-
+-      <div class="spacer"></div>
+-
+-      <div id="keyboard-container"></div>
++      <div id="hangperson-container"></div>
+     </div>
+   </section>
+ 
+diff --git a/js/react-components.js b/js/react-components.js
+index d3f23b1..db7b21e 100644
+--- a/js/react-components.js
++++ b/js/react-components.js
+@@ -2,6 +2,43 @@
+ 
+ var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+ 
++var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
++
++var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
++
++var Hangperson = (function (_React$Component) {
++  function Hangperson() {
++    _classCallCheck(this, Hangperson);
++
++    if (_React$Component != null) {
++      _React$Component.apply(this, arguments);
++    }
++  }
++
++  _inherits(Hangperson, _React$Component);
++
++  _createClass(Hangperson, {
++    render: {
++      value: function render() {
++        return React.createElement(
++          "div",
++          { id: "hangperson" },
++          React.createElement(Letters, { word: "h e - - o" }),
++          React.createElement("div", { className: "spacer" }),
++          React.createElement(Keyboard, null)
++        );
++      }
++    }
++  });
++
++  return Hangperson;
++})(React.Component);
++
++React.render(React.createElement(Hangperson, null), document.getElementById("hangperson-container"));
++"use strict";
++
++var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
++
+ var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+ 
+ var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+@@ -243,8 +280,6 @@ var Keyboard = (function (_React$Component) {
+ 
+   return Keyboard;
+ })(React.Component);
+-
+-React.render(React.createElement(Keyboard, null), document.getElementById("keyboard-container"));
+ "use strict";
+ 
+ var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+@@ -294,8 +329,6 @@ var Letters = (function (_React$Component) {
+ 
+   return Letters;
+ })(React.Component);
+-
+-React.render(React.createElement(Letters, { word: "h e - - o" }), document.getElementById("letters-container"));
+ "use strict";
+ 
+ var BASE_URL = "http://localhost:9292";
+-- 
+1.8.5
+
